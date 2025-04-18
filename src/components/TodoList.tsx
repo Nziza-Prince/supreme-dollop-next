@@ -13,14 +13,19 @@ const TodoList = () => {
     const [error,setError] = useState('')
     
     useEffect(()=>{
-      const fetchTodos = ()=>{
-        const response = axios.get("https://jsonplaceholder.typicode.com/todos")
-        console.log(response)
+      try{
+
+        const fetchTodos = ()=>{
+          const response = axios.get("https://jsonplaceholder.typicode.com/todos")
+          setTodos(response.data)
+        }
+      }catch(err){
+        console.log(err)
       }
     })
   return (
     <div>
-      
+      <h1>{todos}</h1>
     </div>
   )
 }
