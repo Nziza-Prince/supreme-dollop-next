@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import usePosts from '../hooks/usePosts';
+import { Button } from './ui/button';
 
 const PostList = () => {
-  const [userId,setUserId] = useState<number>()
-  const { data: posts, error, isLoading } = usePosts(userId);
+  const pageSize = 10
+  const [page,setPage] = useState(1)
+  const { data: posts, error, isLoading } = usePosts({page,pageSize});
   const [expandedPost, setExpandedPost] = useState<number | null>(null); // Track which post is expanded
 
   if (error) return <p className="text-red-400 text-center">{error.message}</p>;
@@ -14,12 +16,6 @@ const PostList = () => {
   };
   return (
     <div className="max-w-xl mx-auto p-6 bg-white rounded-lg shadow-md mt-10">
-      <select className='max-w-xl' onChange={(event)=> setUserId(parseInt(event.target.value))} value={userId}>
-        <option value=""></option>
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-      </select>
       <h2 className="text-2xl font-bold mb-4 text-center text-gray-800">
         📝 Posts
       </h2>
@@ -61,6 +57,13 @@ const PostList = () => {
           </div>
         ))}
       </div>
+      <div className='flex mt-10 justify-between'>
+<Button className='cursor-pointer' disabled={page === 1} onClick={()=>setPage(Math.max(page - 1,1))}>Previous</Button>
+<p>{`Page ${page}`}</p>
+<Button className='cursor-pointer' onClick={() => setPage(page + 1)}>Next</Button>
+
+      </div>
+      
     </div>
   );
 };
