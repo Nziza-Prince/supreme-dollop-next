@@ -3,13 +3,13 @@ import usePosts from '../hooks/usePosts';
 
 const PostList = () => {
   const { data: posts, error, isLoading } = usePosts();
-  const [expandedPost, setExpandedPost] = useState<number>(); // Track which post is expanded
+  const [expandedPost, setExpandedPost] = useState<number | null>(null); // Track which post is expanded
 
   if (error) return <p className="text-red-400 text-center">{error.message}</p>;
   if (isLoading) return <p className="text-gray-600 text-center">Loading...</p>;
 
   const togglePost = (postId:number) => {
-    setExpandedPost<number>(expandedPost === postId ? null : postId); // Toggle expanded state
+    setExpandedPost(expandedPost === postId ? null : postId); // Toggle expanded state
   };
   return (
     <div className="max-w-xl mx-auto p-6 bg-white rounded-lg shadow-md mt-10">
