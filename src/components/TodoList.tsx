@@ -1,8 +1,9 @@
 import useTodos from "../hooks/useTodos";
 const TodoList = () => {
 
-  const { data: todos, error } = useTodos()
+  const { data: todos, error,isLoading } = useTodos()
 
+  if(isLoading) return <p>Loading...</p>
   if (error) return <p className="text-red-400 font-bold">{error.message}</p>;
 
   return (
