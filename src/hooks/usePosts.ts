@@ -5,18 +5,23 @@ interface Post{
     id:number,
     title:string,
     body:string,
+    userId:number
 }
 
-const usePosts = () => {
+const usePosts = (userId:number | undefined) => {
     const fetchPosts = async() => {
-        const response = await axios.get<Post[]>("https://jsonplaceholder.typicode.com/posts")
+        const response = await axios.get<Post[]>("https://jsonplaceholder.typicode.com/posts",{
+            params:{
+                userId
+            }
+        })
         return response.data.slice(0,10)
   }
 
   return useQuery({
-    queryKey:['posts'],
+    queryKey:userId ? ['users',userId,'posts']:['posts'],
     queryFn:fetchPosts,
-    staleTime:10*1000
+    staleTime:5*60*1000
 
 })
 }

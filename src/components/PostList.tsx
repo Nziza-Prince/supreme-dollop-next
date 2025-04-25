@@ -2,7 +2,8 @@ import { useState } from 'react';
 import usePosts from '../hooks/usePosts';
 
 const PostList = () => {
-  const { data: posts, error, isLoading } = usePosts();
+  const [userId,setUserId] = useState<number>()
+  const { data: posts, error, isLoading } = usePosts(userId);
   const [expandedPost, setExpandedPost] = useState<number | null>(null); // Track which post is expanded
 
   if (error) return <p className="text-red-400 text-center">{error.message}</p>;
@@ -13,6 +14,12 @@ const PostList = () => {
   };
   return (
     <div className="max-w-xl mx-auto p-6 bg-white rounded-lg shadow-md mt-10">
+      <select className='max-w-xl' onChange={(event)=> setUserId(parseInt(event.target.value))} value={userId}>
+        <option value=""></option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+      </select>
       <h2 className="text-2xl font-bold mb-4 text-center text-gray-800">
         📝 Posts
       </h2>
