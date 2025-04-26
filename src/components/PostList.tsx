@@ -60,7 +60,7 @@ const PostList = () => {
       <div className='flex mt-10 justify-between'>
 <Button className='cursor-pointer' disabled={page === 1} onClick={()=>setPage(Math.max(page - 1,1))}>Previous</Button>
 <p>{`Page ${page}`}</p>
-<Button className='cursor-pointer' onClick={() => setPage(page + 1)}>Next</Button>
+<Button disabled={posts?.length < 10} className='cursor-pointer' onClick={() => setPage(page + 1)}>Next</Button>
 
       </div>
       
