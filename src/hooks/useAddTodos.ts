@@ -3,22 +3,20 @@ import axios from "axios"
 
 import { CACHE_KEY_TODOS } from "../utils/constants"
 import { Todo } from "../utils/types"
+import APIClient from "@/services/apiClient"
+
 
 interface AddTodoContext{
     previousTodos:Todo []
 }
 
+const apiClient = new APIClient('/todos')
+
 const useAddTodos = (addNewTodo : () => void) => {
     const queryClient = useQueryClient()
-   
-    const createTodo = async(todo:Todo) => {
-        const res = await axios.post<Todo>("https://jsonplaceholder.typicode.com/todos",todo)
-        return res.data
-    }
 
-    
     return useMutation<Todo,Error,Todo,AddTodoContext>({
-        mutationFn:createTodo,
+        mutationFn:apiClient.post,
         
         onMutate:(newTodo:Todo) => {
             const previousTodos = queryClient.getQueryData<Todo []>(CACHE_KEY_TODOS) || []
