@@ -15,7 +15,7 @@ const TodoForm = () => {
         return res.data
     }
 
-    const addTodo = useMutation({
+    const addTodo = useMutation<Todo,Error,Todo>({
         mutationFn:createTodo,
         onSuccess:(savedTodo,newTodo) => {
             queryClient.setQueryData<Todo []>(['todos'],todos => [savedTodo,...(todos || [])])
@@ -25,6 +25,11 @@ const TodoForm = () => {
 
   return (
     <div >
+        {addTodo.error && 
+        <div className='bg-red-300 p-4 rounded-md'>
+            {addTodo.error.message}
+            </div>
+    }
       <form className="flex gap-4 max-w-xl mx-auto p-6 mt-10" onSubmit={(event)=>{
         event.preventDefault()
         if(inputRef.current && inputRef.current.value){
