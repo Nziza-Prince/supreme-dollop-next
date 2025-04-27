@@ -1,12 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
+import { Todo } from "./types";
 
-export interface Todo {
-    id: number;
-    title: string;
-    completed: boolean;
-    userId:number
-  }
+
 
 const useTodos = () => {
     const fetchTodos = async () => {
