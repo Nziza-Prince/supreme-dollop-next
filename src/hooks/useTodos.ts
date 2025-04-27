@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { Todo } from "./types";
+import { Todo } from "../utils/types";
 
 
 
